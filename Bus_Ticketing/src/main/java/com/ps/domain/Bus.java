@@ -11,9 +11,10 @@ public class Bus{
     private String type;
     private String date;
     private int noOfTickets;
-    private Ticket[] tickets; 
+    private Ticket[] tickets;
+    private int remainingTickets; 
 
-    Bus(String registrationNumber,String name,String startTerminal,String endTerminal,String type,String date,int noOfTickets){
+    public Bus(String registrationNumber,String name,String startTerminal,String endTerminal,String type,String date,int noOfTickets){
         UUID uniqueId=UUID.randomUUID();
         this.setId(uniqueId.toString());
         this.setRegistrationNumber(registrationNumber);
@@ -29,8 +30,38 @@ public class Bus{
         if(this.type.equals("deluxe")) ticketFare=650;
         if(this.type.equals("ultra deluxe")) ticketFare=1200;
         for(int i=0;i<noOfTickets;i++){
-            tickets[i]=new Ticket(ticketFare,date);
+            tickets[i]=new Ticket(ticketFare,date,this.getId());
         }
+        this.setRemainingTickets(this.noOfTickets);
+    }
+
+
+    public Bus(String id,String registrationNumber,String name,String startTerminal,String endTerminal,String type,String date,int noOfTickets,int remainingTickets){
+        this.setId(id);
+        this.setRegistrationNumber(registrationNumber);
+        this.setName(name);
+        this.setStartTerminal(startTerminal);
+        this.setEndTerminal(endTerminal);
+        this.type=type;
+        this.setDate(date);
+        this.setNoOfTickets(noOfTickets);    
+        this.setRemainingTickets(remainingTickets);
+    }
+
+    public int getRemainingTickets() {
+        return remainingTickets;
+    }
+
+    public void setRemainingTickets(int remainingTickets) {
+        this.remainingTickets = remainingTickets;
+    }
+
+    public Ticket[] getTickets(){
+        return tickets;
+    }
+
+    public String getType(){
+        return this.type;
     }
 
     public int getNoOfTickets() {
@@ -87,5 +118,12 @@ public class Bus{
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Bus [date=" + date + ", endTerminal=" + endTerminal + ", id=" + id + ", name=" + name + ", noOfTickets="
+                + noOfTickets + ", registrationNumber=" + registrationNumber + ", remainingTickets=" + remainingTickets
+                + ", startTerminal=" + startTerminal + ", type=" + type + "]";
     }
 }
