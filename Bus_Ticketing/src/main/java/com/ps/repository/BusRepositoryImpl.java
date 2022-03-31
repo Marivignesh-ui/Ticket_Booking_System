@@ -19,7 +19,7 @@ public class BusRepositoryImpl implements BusRepository {
     public Bus createBus(Bus bus)throws SQLException,NamingException{
         try{
             Connection conn=DBConnectionManager.getDBConnection();
-            PreparedStatement statement=conn.prepareStatement("insert into bus values(?,?,?,?,?,?,?,?,?)");
+            PreparedStatement statement=conn.prepareStatement("insert into bus(id,registrationnumber,name,startterminal,endterminal,type,date,nooftickets,remainingtickets) values(?,?,?,?,?,?,?,?,?)");
             statement.setString(1, bus.getId());
             statement.setString(2, bus.getRegistrationNumber());
             statement.setString(3, bus.getName());
@@ -31,7 +31,7 @@ public class BusRepositoryImpl implements BusRepository {
             statement.setInt(9,bus.getRemainingTickets());
             
             if(statement.executeUpdate()>0){
-                statement=conn.prepareStatement("insert into ticket values(?,?,?,?,?)");
+                statement=conn.prepareStatement("insert into ticket(id,fare,date,isavailable,busid) values(?,?,?,?,?)");
                 Ticket[] tickets=bus.getTickets();
                 for(int i=0;i<tickets.length;i++){
                     statement.setString(1, tickets[i].getId());

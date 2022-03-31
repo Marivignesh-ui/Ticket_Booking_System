@@ -1,5 +1,9 @@
+com\ps\repository\TicketRepository.class
+com\ps\repository\TicketRepositoryImpl.class
 com\ps\repository\BusRepositoryImpl.class
 com\ps\repository\DBConnectionManager.class
+com\ps\Controller\TicketController.class
+com\ps\services\TicketServices.class
 com\ps\domain\Bus.class
 com\ps\domain\Ticket.class
 com\ps\repository\BusRepository.class

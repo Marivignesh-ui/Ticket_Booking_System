@@ -1,7 +1,11 @@
 E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\domain\Ticket.java
+E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\services\TicketServices.java
+E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\repository\TicketRepository.java
+E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\Controller\TicketController.java
 E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\repository\BusRepository.java
 E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\repository\BusRepositoryImpl.java
 E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\services\BusServices.java
 E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\Controller\BusController.java
 E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\domain\Bus.java
 E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\repository\DBConnectionManager.java
+E:\Purpleslate\Projects\Ticket_Booking_System\Bus_Ticketing\src\main\java\com\ps\repository\TicketRepositoryImpl.java
