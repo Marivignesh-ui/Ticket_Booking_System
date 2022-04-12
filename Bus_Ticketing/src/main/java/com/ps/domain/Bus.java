@@ -14,6 +14,11 @@ public class Bus{
     private Ticket[] tickets;
     private int remainingTickets; 
 
+    
+
+    public Bus() {
+    }
+
     public Bus(String registrationNumber,String name,String startTerminal,String endTerminal,String type,String date,int noOfTickets){
         UUID uniqueId=UUID.randomUUID();
         this.setId(uniqueId.toString());
@@ -24,13 +29,17 @@ public class Bus{
         this.type=type;
         this.setDate(date);
         this.setNoOfTickets(noOfTickets);
-        tickets=new Ticket[noOfTickets];
+        this.setRemainingTickets(this.noOfTickets);
+    }
+
+    public void createTickets(){
+        this.tickets=new Ticket[noOfTickets];
         double ticketFare=0.0;
-        if(this.type.equals("premium")) ticketFare=400;
-        if(this.type.equals("deluxe")) ticketFare=650;
-        if(this.type.equals("ultra deluxe")) ticketFare=1200;
+        if(this.type.toLowerCase().equals("premium")) ticketFare=400;
+        if(this.type.toLowerCase().equals("deluxe")) ticketFare=650;
+        if(this.type.toLowerCase().equals("ultra deluxe")) ticketFare=1200;
         for(int i=0;i<noOfTickets;i++){
-            tickets[i]=new Ticket(ticketFare,date,this.getId());
+            tickets[i]=new Ticket(ticketFare,date,this.getId(),i+1);
         }
         this.setRemainingTickets(this.noOfTickets);
     }

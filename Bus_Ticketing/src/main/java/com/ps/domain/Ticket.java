@@ -23,12 +23,13 @@ public class Ticket {
         this.setBookedAt(bookedAt);
     }
 
-    public Ticket(double fare, String date,String busId) {
+    public Ticket(double fare, String date,String busId,int seatNo) {
         this.setId(UUID.randomUUID().toString());
         this.setFare(fare);
         this.setDate(date);
         this.setAvailable(true);
         this.setBusId(busId);
+        this.setSeatNo(seatNo);
     }
 
     public String getBookedAt() {

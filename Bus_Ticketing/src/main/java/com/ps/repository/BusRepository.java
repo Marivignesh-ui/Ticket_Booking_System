@@ -10,4 +10,6 @@ import com.ps.domain.Bus;
 public interface BusRepository {
     public Bus createBus(Bus bus) throws SQLException, NamingException;
     public List<Bus> getBuses(String date,String startTerminal,String endTerminal) throws SQLException, NamingException;
+    public Bus updateBus(String busId, String startTerminal, String endTerminal, String date);
+    public Bus deleteBus(String busId);
 }

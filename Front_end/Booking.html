@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking page</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      td {
+        padding-top: 1.3rem;
+        padding-right: 1.3rem;
+        font-size: 1.3rem;
+        font-weight: lighter;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container bg-info rounded-bottom">
+        <div class="row flex">
+          <div class="col-3 my-3">
+            <img
+              src="https://www.bestbus.in/assets/images/news-cms/Royal_Travels_Online_Bus_Ticket_Booking1.png"
+              class="img-thumbnail rounded float-start"
+              alt="Bus_Image"
+              height="200"
+              width="300"
+            />
+          </div>
+          <div class="col my-3">
+            <h1 class="pt-5">Bus Ticketing</h1>
+          </div>
+          <div class="col"></div>
+          <div class="col-3 pt-5" id="loginfo">
+            <a href="login.html" class="btn btn-warning mt-4">Login</a>
+            <a
+              href="Register.html"
+              class="btn btn-outline-light text-warning mt-4 ms-2"
+              >Register</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h3 id="busname"></h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4 border" id="parent">
+          <!-- <div class="row">
+                    <div class="col-2 border">
+                        seat &nbsp;1
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> 
+                    </div>
+                    <div class="col-2 ms-3 border">
+                        seat &nbsp;2
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> 
+                    </div>
+                    <div class="col-2 ms-5 border">
+                        seat &nbsp;3
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> 
+                    </div>
+                    <div class="col-2 ms-3 border">
+                        seat &nbsp;4
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> 
+                    </div>
+                </div> -->
+        </div>
+        <div class="col-1"></div>
+        <div class="col">
+          <h4>Booking Details</h4>
+          <table>
+            <tr>
+              <td>No. of Tickets:</td>
+              <td id="nooftickets">0</td>
+            </tr>
+            <tr>
+              <td>Total Price:</td>
+              <td id="price">0</td>
+            </tr>
+            <tr>
+              <td>Phone no.</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td id="pay-btn">
+                <button type="button" class="btn btn-primary" id="rzp-button1" onclick="payProcessor(event)">
+                  Proceed to payment
+                </button>
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+              </td>
+            </tr>
+          </table>
+          <div id="razorpay_button" class="visually-hidden">
+            <!-- <form action="http://localhost:8080/Bus_Ticketing/paymentResult" method="POST">
+                        <script src="https://checkout.razorpay.com/v1/checkout.js"
+                            data-key="rzp_test_cYuXlRdWuB7go3"
+                            data-amount="1500"
+                            data-currency="INR"
+                            data-order_id="order_JEywmkxKh96rJR"
+                            data-buttontext="Pay with Razorpay"
+                            data-name="Acme Corp"
+                            data-description="Mobile Recharge"
+                            data-image="https://example.com/your_logo.jpg"
+                            data-prefill.name="muks"
+                            data-prefill.email="muks@s2p.com"
+                            data-theme.color="#F37254"></script>
+                        <input type="hidden"
+                            custom="Hidden Element"
+                            name="hidden">
+                    </form> -->
+          </div>
+        </div>
+      </div>
+      <div class="row"></div>
+    </div>
+    <script type="text/javascript">
+      let userId = localStorage.getItem("user_Id");
+      let userName = localStorage.getItem("user_name");
+      let orderId;
+      if (userId != null || userId != undefined) {
+        let loginelement = document.getElementById("loginfo");
+        loginelement.innerHTML = `<span class="rounded-circle border p-3 px-4 bg-secondary bg-gradient"></span><p class="d-inline-block ms-2 mt-3 pt-1 fs-4" style="line-height:3rem">${userName}</p>
+        <button class="btn btn-warning" onclick="logout()" style="margin-left:8rem">Logout</button>`;
+      }
+      var busId = localStorage.getItem("busId");
+      var busname = localStorage.getItem("busName");
+      document.getElementById("busname").innerHTML = busname;
+      // var sendingData = {
+      //   busId: busId,
+      // };
+      fetch(`http://127.0.0.1:8080/Bus_Ticketing/ticket?bus_id=${busId}`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Accept: "*/*",
+        }
+      })
+      // body: JSON.stringify(sendingData),
+        .then((response) => response.json())
+        .then((data) => {
+          var parent = document.getElementById("parent");
+          for (i = 0; i < data.length; i += 4) {
+            var element = document.createElement("div");
+            element.className = "row mt-1";
+            var innerElement1 = document.createElement("div");
+            innerElement1.className = "col-2 border ms-3";
+            var check;
+            if (data[i].isAvailable) {
+              check = `<input class="form-check-input ms-1" type="checkbox" id="inlineCheckbox1" value="option1" onClick=ticketCollector(event,'${data[i].id}','${data[i].fare}')>`;
+            } else {
+              check = `<input class="form-check-input ms-1" type="checkbox" id="inlineCheckbox1" value="option1" checked disabled> `;
+            }
+            innerElement1.innerHTML = `
+                                        seat &nbsp;${data[i].seatNo}<br>
+                                        ${check}`;
+
+            var innerElement2 = document.createElement("div");
+            innerElement2.className = "col-2 ms-3 border";
+            if (data[i + 1].isAvailable) {
+              check = `<input class="form-check-input ms-1" type="checkbox" id="inlineCheckbox1" value="option1" onClick=ticketCollector(event,'${
+                data[i + 1].id
+              }','${data[i + 1].fare}')>`;
+            } else {
+              check = `<input class="form-check-input ms-1" type="checkbox" id="inlineCheckbox1" value="option1" checked disabled> `;
+            }
+            innerElement2.innerHTML = `
+                                        seat &nbsp;${data[i + 1].seatNo}<br>
+                                        ${check}`;
+            var innerElement3 = document.createElement("div");
+            innerElement3.className = "col-2 ms-5 border";
+            if (data[i + 2].isAvailable) {
+              check = `<input class="form-check-input ms-1" type="checkbox" id="inlineCheckbox1" value="option1" onClick=ticketCollector(event,'${
+                data[i + 2].id
+              }','${data[i + 2].fare}')>`;
+            } else {
+              check = `<input class="form-check-input ms-1" type="checkbox" id="inlineCheckbox1" value="option1" checked disabled> `;
+            }
+            innerElement3.innerHTML = `
+                                        seat &nbsp;${data[i + 2].seatNo}<br>
+                                        ${check}`;
+
+            var innerElement4 = document.createElement("div");
+            innerElement4.className = "col-2 ms-3 border";
+            if (data[i + 3].isAvailable) {
+              check = `<input class="form-check-input ms-1" type="checkbox" id="inlineCheckbox1" value="option1" onClick=ticketCollector(event,'${
+                data[i + 3].id
+              }','${data[i + 3].fare}')>`;
+            } else {
+              check = `<input class="form-check-input ms-1" type="checkbox" id="inlineCheckbox1" value="option1" checked disabled> `;
+            }
+            innerElement4.innerHTML = `
+                                        seat &nbsp;${data[i + 3].seatNo}<br>
+                                        ${check}`;
+            element.appendChild(innerElement1);
+            element.appendChild(innerElement2);
+            element.appendChild(innerElement3);
+            element.appendChild(innerElement4);
+            parent.appendChild(element);
+          }
+        });
+      var price = 0;
+      var nooftickets = 0;
+      sendingData = {
+        ticketIds: [],
+        userId: userId,
+        busId: busId,
+      };
+      function ticketCollector(event, ticketId, fare) {
+        console.log(event.target.checked);
+        if (event.target.checked) {
+          sendingData.ticketIds.push(ticketId);
+          price = price + Number(fare);
+          nooftickets += 1;
+        } else {
+          sendingData.ticketIds = sendingData.ticketIds.filter(
+            (val) => val !== ticketId
+          );
+          price = price - Number(fare);
+          nooftickets -= 1;
+        }
+        document.getElementById("nooftickets").innerHTML = `${nooftickets}`;
+        document.getElementById("price").innerHTML = `${price}`;
+        console.log(sendingData);
+      }
+
+      function logout() {
+        localStorage.clear();
+        location.assign("logout.html");
+      }
+
+      function payProcessor(e) {
+        document.getElementById("pay-btn").innerHTML=`<button class="btn btn-primary" type="button" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Processing...
+</button>`;
+        if (nooftickets == 0) {
+          alert("Select a seat before payment");
+          document.getElementById("pay-btn").innerHTML=`<button type="button" class="btn btn-primary" id="rzp-button1" onclick="payProcessor(event)">
+                  Proceed to payment
+                </button>`;
+          return;
+        }
+
+        sendingData1 = {
+          amount: (price*100),
+          receipt:
+            userId.substring(0, 5) +
+            Math.random()
+              .toString(36)
+              .replace(/[^a-z]+/g, "")
+              .substr(0, 5) +
+            userId.substring(7, 10),
+        };
+
+        fetch("http://localhost:8080/Bus_Ticketing/pay", {
+          mode: "cors",
+          method: "POST",
+          headers: {
+            Accept: "*/*",
+          },
+          body: JSON.stringify(sendingData1),
+        })
+          .then((resp) => resp.json())
+          .then((data) => {
+            if (data.modelJson.map.receipt == sendingData1.receipt) {
+              orderId = data.modelJson.map.id;
+              console.log(sendingData1.receipt);
+              console.log(orderId);
+            }
+
+            var options = {
+              key: "rzp_test_cYuXlRdWuB7go3", // Enter the Key ID generated from the Dashboard
+              amount: price * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+              currency: "INR",
+              name: "Bus Ticketing",
+              description: "Test Transaction",
+              image: "https://example.com/your_logo",
+              order_id: orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+              handler: function (response) {
+                fetch(
+                  `http://localhost:8080/Bus_Ticketing/paymentResult?razorpay_payment_id=${response.razorpay_payment_id}&razorpay_order_id=${response.razorpay_order_id}&razorpay_signature=${response.razorpay_signature}`,
+                  {
+                    mode: "cors",
+                    method: "POST",
+                    headers: {
+                      Accept: "*/*",
+                    },
+                    body: JSON.stringify(sendingData),
+                  }
+                )
+                  .then((response) => response.json())
+                  .then((data) => {
+                    console.log(data);
+                    if (data != null) {
+                      alert("Booking ticket Successfull");
+                      location.reload();
+                    }
+                  });
+              },
+              prefill: {
+                name: "muks",
+                email: "muks@s2p.com",
+                contact: "9999999999",
+              },
+              notes: {
+                address: "Razorpay Corporate Office",
+              },
+              theme: {
+                color: "#3399cc",
+              },
+            };
+            console.log(options);
+            var rzp1 = new Razorpay(options);
+            rzp1.on("payment.failed", function (response) {
+              // alert(response.error.code);
+              // alert(response.error.description);
+              // alert(response.error.source);
+              // alert(response.error.step);
+              document.getElementById("pay-btn").innerHTML=`<button type="button" class="btn btn-primary" id="rzp-button1" onclick="payProcessor(event)">
+                  Proceed to payment
+                </button>`;
+              alert("Payment failed "+response.error.reason);
+              // alert(response.error.metadata.order_id);
+              // alert(response.error.metadata.payment_id);
+            });
+            rzp1.open();
+            e.preventDefault();
+          });
+      };
+    </script>
+  </body>
+</html>
